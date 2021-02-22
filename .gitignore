@@ -11,6 +11,3 @@ Cargo.lock
 
 # VSCode configuration files
 /.vscode/
-
-# Self
-.gitignore
