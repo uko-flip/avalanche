@@ -7,7 +7,7 @@ VM has "infinity" 32-bit stack, but **has no registers**. All instructions (excl
 push **num** - push 32-bit number on stack  
 pop - remove 32-bit number from stack  
 test - print "Hello, World!" message  
-add - add two numbers on stack. Result will be at the top of the stack (*Removes input number*)  
+add - add two numbers on stack. Result will be at the top of the stack (*Removes input numbers*)  
 printn - display the number at the top of the stack (*Removes input number*)  
 **Author does not guarantee that this list is valid. Always check source code**
 ## Building
@@ -19,3 +19,9 @@ printn - display the number at the top of the stack (*Removes input number*)
 3. Run following command:  
 `cargo build --release`  
 Building result can be found at target/release
+### Testing
+For test VM run following command:
+`./target/release/avalanche test.avl`
+Expect output:
+`10
+Hello, World!`
