@@ -23,5 +23,5 @@ Building result can be found at target/release
 For test VM run following command:  
 `./target/release/avalanche test.avl`  
 Expect output:  
-`10  
-Hello, World!`  
+`10`  
+`Hello, World!`  
