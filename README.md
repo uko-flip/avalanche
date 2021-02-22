@@ -19,9 +19,9 @@ printn - display the number at the top of the stack (*Removes input number*)
 3. Run following command:  
 `cargo build --release`  
 Building result can be found at target/release
-### Testing
-For test VM run following command:
-`./target/release/avalanche test.avl`
-Expect output:
-`10
-Hello, World!`
+## Testing
+For test VM run following command: 
+`./target/release/avalanche test.avl`  
+Expect output:  
+`10  
+Hello, World!`  
