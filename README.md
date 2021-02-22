@@ -12,10 +12,10 @@ printn - display the number at the top of the stack (*Removes input number*)
 **Author does not guarantee that this list is valid. Always check source code**
 ## Building
 #### Any operating system
-1. Clone the repo:
-`git clone https://github.com/avalanche-lang/avalanche.git`
-2. Enter repo folder:
-`cd avalanche`
-3. Run following command:
-`cargo build --release`
+1. Clone the repo:  
+`git clone https://github.com/avalanche-lang/avalanche.git`  
+2. Enter repo folder:  
+`cd avalanche`  
+3. Run following command:  
+`cargo build --release`  
 Building result can be found at target/release
