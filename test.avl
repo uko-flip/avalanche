@@ -2,3 +2,4 @@ push 2
 push 8
 add
 printn
+test
