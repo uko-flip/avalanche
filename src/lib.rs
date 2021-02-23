@@ -3,5 +3,4 @@ pub mod config;
 pub mod lexer;
 
 #[cfg(test)]
-mod tests {
-}
+mod tests {}
