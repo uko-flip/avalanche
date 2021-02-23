@@ -8,7 +8,8 @@ push **num** - push 32-bit number on stack
 pop - remove 32-bit number from stack  
 test - print "Hello, World!" message  
 add - add two numbers on stack. Result will be at the top of the stack (*Removes input numbers*)  
-printn - display the number at the top of the stack (*Removes input number*)  
+printn - display number at top of stack (*Removes input number*)  
+rcv - take number and put it on top of stack
 **Author does not guarantee that this list is valid. Always check source code**
 ## Building
 #### Any operating system

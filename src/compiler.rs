@@ -1,8 +1,18 @@
 use crate::lexer::*;
+use std::io;
 
 macro_rules! stack_pop {
     ($stack:ident) => {
         match $stack.pop() {
+            Some(e) => e,
+            None => 0,
+        }
+    };
+}
+
+macro_rules! match_null {
+    ($value:ident) => {
+        match $value {
             Some(e) => e,
             None => 0,
         }
@@ -17,6 +27,7 @@ pub enum Instruction {
     Test,
     PrintN,
     Add,
+    RecV,
 }
 
 pub struct Compiler {}
@@ -33,6 +44,7 @@ impl Compiler {
                     "test" => instructions.push(Instruction::Test),
                     "printn" => instructions.push(Instruction::PrintN),
                     "add" => instructions.push(Instruction::Add),
+                    "rcv" => instructions.push(Instruction::RecV),
                     _ => println!("Unsupported command: {}", e),
                 },
                 Token::Number(e) => {
@@ -62,6 +74,15 @@ impl Instruction {
                 let op1 = stack_pop!(stack);
                 let op2 = stack_pop!(stack);
                 stack.push(op1 + op2);
+            }
+            Instruction::RecV => {
+                let mut buf = String::new();
+                io::stdin()
+                    .read_line(&mut buf)
+                    .expect("Failed to read line");
+                let chr = buf.as_bytes()[0] as char;
+                let num = chr.to_digit(10);
+                stack.push(match_null!(num));
             }
         }
     }

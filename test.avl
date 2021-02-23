@@ -3,3 +3,5 @@ push 8
 add
 printn
 test
+rcv
+printn
