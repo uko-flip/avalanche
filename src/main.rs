@@ -20,7 +20,12 @@ fn main() {
     let lexems = Lexer::lex(f_content);
     let instructions = Compiler::compile(lexems);
     let mut stack: Vec<u32> = Vec::new();
-    for i in &instructions {
-        i.execute(&mut stack);
+    let mut i = 0;
+    while i < instructions.len() {
+        let signal = instructions[i].execute(&mut stack, i);
+        match signal {
+            Signal::Call {pointer} => i = pointer as usize,
+            _ => i += 1
+        }
     }
 }

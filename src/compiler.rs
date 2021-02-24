@@ -1,5 +1,5 @@
 use crate::lexer::*;
-use std::io;
+use text_io::scan;
 
 macro_rules! stack_pop {
     ($stack:ident) => {
@@ -10,14 +10,14 @@ macro_rules! stack_pop {
     };
 }
 
-macro_rules! match_null {
+/* macro_rules! match_null {
     ($value:ident) => {
         match $value {
             Some(e) => e,
             None => 0,
         }
     };
-}
+} */
 
 macro_rules! match_empty {
     ($value:ident) => {
@@ -38,7 +38,14 @@ pub enum Instruction {
     Add,
     RecV,
     RecVC,
-    PrintS
+    PrintS,
+    Call,
+}
+
+#[derive(Debug)]
+pub enum Signal {
+    None,
+    Call { pointer: u32 },
 }
 
 pub struct Compiler {}
@@ -58,6 +65,7 @@ impl Compiler {
                     "rcv" => instructions.push(Instruction::RecV),
                     "recv" => instructions.push(Instruction::RecVC),
                     "prints" => instructions.push(Instruction::PrintS),
+                    "call" => instructions.push(Instruction::Call),
                     _ => println!("Unsupported command: {}", e),
                 },
                 Token::Number(e) => {
@@ -75,7 +83,7 @@ impl Compiler {
 }
 
 impl Instruction {
-    pub fn execute(&self, stack: &mut Vec<u32>) {
+    pub fn execute(&self, stack: &mut Vec<u32>, ca: usize) -> Signal {
         match *self {
             Instruction::Push(e) => stack.push(e),
             Instruction::Pop => {
@@ -89,27 +97,26 @@ impl Instruction {
                 stack.push(op1 + op2);
             }
             Instruction::RecV => {
-                let mut buf = String::new();
-                io::stdin()
-                    .read_line(&mut buf)
-                    .expect("Failed to read line");
-                let chr = buf.as_bytes()[0] as char;
-                let num = chr.to_digit(10);
-                stack.push(match_null!(num));
-            },
+                let num: u32;
+                scan!("{}", num);
+                stack.push(num);
+            }
             Instruction::RecVC => {
-                let mut buf = String::new();
-                io::stdin()
-                    .read_line(&mut buf)
-                    .expect("Failed to read line");
-                let chr = buf.as_bytes()[0] as char;
+                let chr: char;
+                scan!("{}", chr);
                 stack.push(chr as u32);
-            },
+            }
             Instruction::PrintS => {
                 let s = stack_pop!(stack);
                 let u = std::char::from_u32(s);
                 println!("{}", match_empty!(u));
             }
+            Instruction::Call => {
+                let c_addr = stack_pop!(stack);
+                stack.push(ca as u32);
+                return Signal::Call { pointer:  c_addr};
+            }
         }
+        Signal::None
     }
 }

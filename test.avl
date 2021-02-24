@@ -1,9 +1,3 @@
 push 2
-push 8
-add
+call
 printn
-test
-rcv
-printn
-recv
-prints
