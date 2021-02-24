@@ -19,6 +19,15 @@ macro_rules! match_null {
     };
 }
 
+macro_rules! match_empty {
+    ($value:ident) => {
+        match $value {
+            Some(e) => e,
+            None => ' ',
+        }
+    };
+}
+
 #[derive(Debug)]
 pub enum Instruction {
     Push(u32),
@@ -28,6 +37,8 @@ pub enum Instruction {
     PrintN,
     Add,
     RecV,
+    RecVC,
+    PrintS
 }
 
 pub struct Compiler {}
@@ -45,6 +56,8 @@ impl Compiler {
                     "printn" => instructions.push(Instruction::PrintN),
                     "add" => instructions.push(Instruction::Add),
                     "rcv" => instructions.push(Instruction::RecV),
+                    "recv" => instructions.push(Instruction::RecVC),
+                    "prints" => instructions.push(Instruction::PrintS),
                     _ => println!("Unsupported command: {}", e),
                 },
                 Token::Number(e) => {
@@ -83,6 +96,19 @@ impl Instruction {
                 let chr = buf.as_bytes()[0] as char;
                 let num = chr.to_digit(10);
                 stack.push(match_null!(num));
+            },
+            Instruction::RecVC => {
+                let mut buf = String::new();
+                io::stdin()
+                    .read_line(&mut buf)
+                    .expect("Failed to read line");
+                let chr = buf.as_bytes()[0] as char;
+                stack.push(chr as u32);
+            },
+            Instruction::PrintS => {
+                let s = stack_pop!(stack);
+                let u = std::char::from_u32(s);
+                println!("{}", match_empty!(u));
             }
         }
     }
