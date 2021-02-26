@@ -12,7 +12,7 @@ printn - display number at top of stack (*Removes input number*)
 rcv - take number and put it on top of stack  
 recv - take char and put it on top of stack  
 prints - display char at top of stack (*Removes input number*)
-call - jump to address at top of stack (*Replaces input address with self address*)
+call - jump to address at top of stack (*Replaces input address with self address*)  
 **Author does not guarantee that this list is valid. Always check source code**
 ## Building
 #### Any operating system
